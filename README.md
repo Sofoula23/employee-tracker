@@ -7,9 +7,15 @@ The user can select the following options to change, add, or update:
 * Add a new employee, a new role, or a new department.
 *Update the employee role and department. 
 
-# WATCH THE FOLLOWING VIDEO FOR OPERATION 
+## Small example of functional application
+
+![Employee-Tracker](./assets/et.png)
+
+
+# WATCH THE FOLLOWING VIDEO FOR FULL OPERATION 
 
 https://youtu.be/bLeRgEL_hd4 
+
 
 ## LINK TO GITHUB REPO
 
