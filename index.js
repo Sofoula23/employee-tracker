@@ -204,7 +204,6 @@ const getDepartments = () => {
     });
 }
 
-// View all employees, roles, and departments
 const viewEmployees = async () => {
     const employees = await getEmployees();
     console.table(employees);
@@ -219,7 +218,6 @@ const viewDepartments = async () => {
     const depts = await getDepartments();
     console.table(depts);
 }
-
 
 const addEmployee = (employeeInformation) => {
     let stmt = `
