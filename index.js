@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-
+// Creating connection to mysql database
 const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -43,6 +43,10 @@ const askUserAction = async () => {
                 {
                     name: "Update employee role",
                     value: "updateEmployeeRole"
+                },
+                {
+                    name: "Delete an employee",
+                    value: "removeEmployee"
                 }
 
             ]
@@ -204,6 +208,31 @@ const getDepartments = () => {
     });
 }
 
+const getRemoveEmployee =  async () =>  {
+    const employee = await getEmployees(`SELECT * FROM employee.first_name, employee.last_name`);
+    
+    return inquirer
+    .prompt([{
+        type: "list",
+        message: "Which employee would you like to remove?",
+        name: "employeeName",
+        choices: employee.map(employee => {
+            return {
+                name: employee.first_name,
+                value: employee.id
+            }
+        })
+    }
+    ])
+    .then(function (answer){
+        const query = "DELETE FROM employee WHERE ?";
+        const newId = Number(answer.removeEmployee);
+        connection.query(query, { id: newId }, function (err, res) {
+        
+    });
+    });
+    
+}
 const viewEmployees = async () => {
     const employees = await getEmployees();
     console.table(employees);
@@ -271,6 +300,13 @@ const addDepartment = (departmentName) => {
     });
 }
 
+// const removeEmployee = (employee) => {
+//    let stmt = `
+//    DELETE FROM employee
+//    ()
+//    VALUES()`
+// }
+
 const start = async () => {
     const userAction = await askUserAction();
     switch (userAction) {
@@ -319,6 +355,17 @@ const start = async () => {
                 console.log('An error occurred while updating the employee role');
             }
             break;
+        case "removeEmployee": {
+            const employee = await getRemoveEmployee();
+            try {
+            await removeEmployee(employee);
+            console.log('The employee was successfully removed');
+            } catch (e) {
+                console.log('An error occurred while deleting the employee');
+            }
+            
+            break;
+             }    
     }
     connection.end();
 }
